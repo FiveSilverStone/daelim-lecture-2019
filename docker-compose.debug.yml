@@ -1,0 +1,14 @@
+version: '2.1'
+
+services:
+  node-docker-example:
+    image: node-docker-example
+    build: .
+    volumes:
+      - ./src:/usr/src/app/src
+    environment:
+      NODE_ENV: development
+    ports:
+      - 3000:3000
+      - 9229:9229
+    command: npm start
