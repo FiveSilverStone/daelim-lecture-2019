@@ -12,19 +12,19 @@ app.get("/", (req, res) => {
 });
 
 app.get("/users", (req, res) => {
+	let result = "유저가 존재하지 않습니다.";
 	if(user){
-		res.send("user "+user.name+" get");
-	}else{
-		res.send("유저가 존재하지 않습니다.");
-	}	
+		result = "user "+user.name+" get";
+	}
+	res.send(result);
 });
 
 app.get("/users/:id", (req, res) => {
+	let result = "user id "+req.params.id+"가 존재하지 않습니다.";
 	if(user && user.id == req.params.id){
-		res.send("user "+user.name+" get");
-	}else{
-		res.send("user id "+req.params.id+"가 존재하지 않습니다.");
-	}	
+		result = "user "+user.name+" get";
+	}
+	res.send(result);
 });
 
 app.post("/users", (req, res) => {
@@ -33,19 +33,19 @@ app.post("/users", (req, res) => {
 });
 
 app.put("/users/:id", (req, res) => {
+	let result = "user id "+req.params.id+"가 존재하지 않습니다.";
 	if(user && user.id == req.params.id){
 		user.name = req.body.name;
-		res.send("user name "+user.name+" 으로 변경");
-	}else{
-		res.send("user id "+req.params.id+"가 존재하지 않습니다.");
-	}	
+		result = "user name "+user.name+" 으로 변경";
+	}
+	res.send(result);
 });
 
 app.delete("/users/:id", (req, res) => {
+	let result = "user id "+req.params.id+"가 존재하지 않습니다.";
 	if(user && user.id == req.params.id){
 		user = null;
-		res.send("user id "+req.params.id+" 삭제");
-	}else{
-		res.send("user id "+req.params.id+"가 존재하지 않습니다.");
-	}	
+		result = "user id "+req.params.id+" 삭제";
+	}
+	res.send(result);
 });
