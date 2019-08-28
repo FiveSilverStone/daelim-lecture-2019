@@ -12,6 +12,7 @@
 			"port": 9229,
 			"localRoot": "${workspaceFolder}",
 			"remoteRoot": "/usr/src/app",      
+			"restart": true
 		},
 	]
 }
