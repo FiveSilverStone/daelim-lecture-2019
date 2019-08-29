@@ -1,8 +1,13 @@
 const express = require("express");
 const _ = require("lodash");
 const app = express();
-const users = [];
-let user = null;
+let users = [{
+	id: 1,
+	name: "홍길동"
+},{
+	id: 2,
+	name: "강철수"
+}];
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -43,19 +48,26 @@ app.post("/users", (req, res) => {
 });
 
 app.put("/users/:id", (req, res) => {
-	let result = "user id "+req.params.id+"가 존재하지 않습니다.";
-	if(user && user.id == req.params.id){
-		user.name = req.body.name;
-		result = "user name "+user.name+" 으로 변경";
+	let check_user = _.find(users, ["id", parseInt(req.params.id)]);
+	let msg = req.params.id+" 아이디를 가진 유저가 존재하지 않습니다.";
+	if(check_user){
+		users = users.map(entry => {
+			if(entry.id === parseInt(req.params.id)){
+				entry.name = req.body.name;
+			}
+			return entry;
+		});
+		msg = "성공적으로 수정 되었습니다.";
 	}
-	res.send(result);
+	res.send({msg});
 });
 
 app.delete("/users/:id", (req, res) => {
-	let result = "user id "+req.params.id+"가 존재하지 않습니다.";
-	if(user && user.id == req.params.id){
-		user = null;
-		result = "user id "+req.params.id+" 삭제";
+	let check_user = _.find(users, ["id", parseInt(req.params.id)]);
+	let msg = req.params.id+" 아이디를 가진 유저가 존재하지 않습니다.";
+	if(check_user){
+		msg = "성공적으로 삭제 되었습니다.";
+		users = _.reject(users, ["id", parseInt(req.params.id)]);
 	}
-	res.send(result);
+	res.send({msg});
 });
